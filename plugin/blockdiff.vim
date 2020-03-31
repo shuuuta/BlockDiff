@@ -62,17 +62,17 @@ set cpo&vim
 
 " ---------- Code -------------------------------------------------------------
 fun! BlockDiff_GetBlock1() range
-  let s:regd = @@
+  let s:regd = @+
   " copy selected block into unnamed register
   exe a:firstline . "," . a:lastline . "y"
   " save block for later use in variable
-  let s:block1 = @@
+  let s:block1 = @+
   " restore unnamed register
-  let @@ = s:regd
+  let @+ = s:regd
 endfun
 
 fun! BlockDiff_GetBlock2() range
-  let s:regd = @@
+  let s:regd = @+
   exe a:firstline . "," . a:lastline . "y"
 
   " Open new tab, paste second selected block
@@ -85,7 +85,7 @@ fun! BlockDiff_GetBlock2() range
   " vsplit left for first selected block
   lefta vnew
   " copy first block into unnamed register & paste
-  let @@ = s:block1
+  let @+ = s:block1
   normal P
   se buftype=nowrite
 
@@ -93,7 +93,7 @@ fun! BlockDiff_GetBlock2() range
   diffthis
 
   " restore unnamed register
-  let @@ = s:regd
+  let @+ = s:regd
 endfun
 
 
